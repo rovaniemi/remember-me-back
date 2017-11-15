@@ -1,21 +1,44 @@
 package remember.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import remember.domain.Book;
+import remember.repository.BookRepository;
 
-@Controller
+import java.util.List;
+import java.util.Map;
+
+@RestController
 public class BookController {
 
-    @GetMapping("/")
+    @Autowired
+    private BookRepository bookRepository;
+
+    @GetMapping("/books")
     @ResponseBody
-    public String home() {
-        return "<a href='/other'>linkki</a>";
+    public List<Book> getAll() {
+        return bookRepository.findAll();
     }
-    
-    @GetMapping("/other")
+
+    @GetMapping("/books/{id}")
     @ResponseBody
-    public String other() {
-        return "Hei Maailma!";
+    public Book getBook(@PathVariable Long id) {
+        return bookRepository.findOne(id);
+    }
+
+    @PostMapping("/books")
+    @ResponseBody
+    public Book addBook(@RequestBody Map<String, String> request) {
+        Book book = new Book();
+        book.setName(request.get("name"));
+        book.setAuthor(request.get("author"));
+        bookRepository.saveAndFlush(book);
+        return book;
+    }
+
+    @DeleteMapping("/books/{id}")
+    @ResponseBody
+    public void deleteBook(@PathVariable Long id) {
+        bookRepository.delete(id);
     }
 }

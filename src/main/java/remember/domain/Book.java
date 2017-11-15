@@ -9,6 +9,9 @@ public class Book extends AbstractPersistable<Long> {
     private String name;
     private String author;
 
+    public Book() {
+    }
+
     public Book(String name) {
         this.name = name;
     }
