@@ -9,8 +9,6 @@ gradle/*
 build/*
 build
 gradle
-gradlew.bat
-gradlew
 .gradle/*
 .gradle
 out/*
