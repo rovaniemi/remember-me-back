@@ -1,0 +1,20 @@
+language: java
+
+env:
+  - MOZ_HEADLESS=1
+addons:
+  firefox: latest
+
+script:
+  - ./gradlew check
+  - ./gradlew jacocoTestReport
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: j7dbr+HnXzr9qY0k9Em0rv7jsrddoRDr+uK5wL/0Dp4uUo6ihkBeeai+67zSkpmpBvxWYoEfeUeDIfGytoRd7+MGEelRkOLUKl7CayDIZVjuwgQsOoD9cLgc2z44pYkT4aux19ZWB9U04+wUTEWrIS513/9BpyM9xHwruwWOulwFwSV2DGg/yhUe8LMO7/qqZSqz3fpEbEvDvxhIIn8qWOQQPc7cwEC+Mli2/i1VFUWMNqotwWpI0oE4l4wIdfZO3JA/Pdb88bFFz4mDd4CDRYko6sAIBeF4OIE6e9EdKvLHuQj5Z+5TIffcE7FYfGksvITi9Ft/BuUKJCXWAkNTqxjrw53Pm4wOqGRfajrti6NHLVwykjRFAUnHbiihCM5khGBn6envtQguNlMhgmgmyNe+PTZRABNIfp/6ATSX1YNi7BX8KSG87U5ynRF4yCXl/J1BMdZlrBARAQKMkCam7nifrfTMrfFO67fcRRsro6Ji7O4qIXwK1o+ZjJFwF+XJSu6XebtwEatBI1w8/XZD9feoLcHMngNiehu/mXqXgbdxsgMLVogpM2nW/O2iTsdJ3GcKONyFlAPWuZ7kpgewTcB2/st6pcnDAw1itvIu/vN5oHHHlOtX5nhNn0FpKx1DyaZEi1pmA59GUBLRY9R3HBER+VVoKJ7jqf5VZvxUagc=
+  app: remember-me-back
+  on:
+    repo: rovaniemi/remember-me-back

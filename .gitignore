@@ -1,6 +1,30 @@
 # Compiled class file
 *.class
 
+# gradle
+
+lib/*
+lib
+gradle/*
+build/*
+build
+gradle
+gradlew.bat
+gradlew
+.gradle/*
+.gradle
+out/*
+out
+
+# mac
+
+
+# idea
+
+.idea/*
+.idea
+
+
 # Log file
 *.log
 
@@ -18,5 +42,6 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+
+# mac
+DS_Store
