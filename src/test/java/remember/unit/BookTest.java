@@ -1,7 +1,7 @@
 package remember.unit;
 
 import org.junit.*;
-import remember.Domain.Book;
+import remember.domain.Book;
 
 public class BookTest {
 
