@@ -5,10 +5,8 @@
 
 lib/*
 lib
-gradle/*
 build/*
 build
-gradle
 .gradle/*
 .gradle
 out/*
