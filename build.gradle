@@ -17,7 +17,6 @@ buildscript {
 logging.captureStandardOutput LogLevel.QUIET
 
 project.ext {
-    cucumberVersion = "1.2.5"
     junitVersion = "4.12"
     seleniumVersion = "3.4.0"
 }
@@ -58,10 +57,6 @@ dependencies {
     }
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("org.springframework:spring-test")
-    testCompile "info.cukes:cucumber-core:" + cucumberVersion
-    testCompile "info.cukes:cucumber-java:" + cucumberVersion
-    testCompile "info.cukes:cucumber-junit:" + cucumberVersion
-    testCompile "info.cukes:cucumber-spring:" + cucumberVersion
     testCompile "junit:junit:" + junitVersion 
 }
 

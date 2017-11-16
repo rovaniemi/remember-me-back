@@ -39,7 +39,7 @@ public class BookControllerTest {
         mockMvc.perform(get("/books"))
                 .andExpect(status().isOk());
     }
-    
+
     @Test
     public void responseTypeApplicationJson() throws Exception {
         mockMvc.perform(get("/books"))
