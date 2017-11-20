@@ -10,6 +10,8 @@
 
 You will need a Java Runtime Environment (JRE) to run java programs. You can download it [here](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html).
 
+In development, you'll also have to start [the web app](https://github.com/irenenikk/remember-me-front)
+
 ## Backlog
 * You will find a backlog [here](https://docs.google.com/spreadsheets/d/1eq01w-fGfOIcPo54cV_MVKJF2UQoHha497509iPhAXg/edit?usp=sharing) 
 
