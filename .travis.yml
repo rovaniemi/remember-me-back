@@ -1,20 +1,24 @@
 language: java
-
 env:
-  - MOZ_HEADLESS=1
+- MOZ_HEADLESS=1
 addons:
   firefox: latest
-
 script:
-  - ./gradlew check
-  - ./gradlew jacocoTestReport
+- "./gradlew check"
+- "./gradlew jacocoTestReport"
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
-
+- bash <(curl -s https://codecov.io/bash)
 deploy:
+  provider: heroku
+  api_key:
+    secure: pzxR5JPzJ4k/us5J+xgWLcuAD7WNJOvnfnplA16D+5aYScP+76yoIe7hVwkJ0CqP/LicBMqGnuIUd8htLVlZsUuPMl9e2CZDnmnvYW8Qw45or5PHCRJQ5vc2VOpq/plOWM+D/M/SM+EioncpOlnHZZwJwt8rTIzp9riIxzDzOTOMxTseZowX+J3ff/TR4L22UkWfTPuFY5izh3EnGctX5JYDoPN9pD8PxB/mN883GCm9ztdN3n4M963v7NHSJl36YMEG3iYiN9eqqkiZLTDTwPuOFZ9yfueGkLIIlIaLCh9Fupn0HHKd6Nbx1OGVD8hkrBpqyvdnAslMkK9sUQ9YCl+FSRoEUX4/31kz0NgXKa5iJ1OGMrYpKTP2Vr/uWvmhD1prXFAir9J+4hq/3zHrDsDpvKPikZGXan9T7J5UzyGe3x6e7q+VJ+SjEszI330LwnhlikWwv5szj03RnzHPqX2SCJUuQ1KWQVRz1XNs79NLyh8QIwjtAN9jsKBPkrm8dfNahWOqfYQd8kAQeq+W4hRN4eG+CqJ82dP9mrMfBdk1aY8vTPoKt6Yb6Lm5LHiny/HCsAO7Ewqt5uPQMLNWJxVgUWfctOWBAiYmvVzs+IeAsKTcC9cJNth0dA/oW3DXehTxsXf3CMDt9Za1zVC/l2lt10mUWT/T6PngzdK6Byk=
+  app: dev-remember-me-back
+  on:
+    repo: rovaniemi/remember-me-back
+
   provider: heroku
   api_key:
     secure: j7dbr+HnXzr9qY0k9Em0rv7jsrddoRDr+uK5wL/0Dp4uUo6ihkBeeai+67zSkpmpBvxWYoEfeUeDIfGytoRd7+MGEelRkOLUKl7CayDIZVjuwgQsOoD9cLgc2z44pYkT4aux19ZWB9U04+wUTEWrIS513/9BpyM9xHwruwWOulwFwSV2DGg/yhUe8LMO7/qqZSqz3fpEbEvDvxhIIn8qWOQQPc7cwEC+Mli2/i1VFUWMNqotwWpI0oE4l4wIdfZO3JA/Pdb88bFFz4mDd4CDRYko6sAIBeF4OIE6e9EdKvLHuQj5Z+5TIffcE7FYfGksvITi9Ft/BuUKJCXWAkNTqxjrw53Pm4wOqGRfajrti6NHLVwykjRFAUnHbiihCM5khGBn6envtQguNlMhgmgmyNe+PTZRABNIfp/6ATSX1YNi7BX8KSG87U5ynRF4yCXl/J1BMdZlrBARAQKMkCam7nifrfTMrfFO67fcRRsro6Ji7O4qIXwK1o+ZjJFwF+XJSu6XebtwEatBI1w8/XZD9feoLcHMngNiehu/mXqXgbdxsgMLVogpM2nW/O2iTsdJ3GcKONyFlAPWuZ7kpgewTcB2/st6pcnDAw1itvIu/vN5oHHHlOtX5nhNn0FpKx1DyaZEi1pmA59GUBLRY9R3HBER+VVoKJ7jqf5VZvxUagc=
   app: remember-me-back
   on:
-    repo: rovaniemi/remember-me-back
+  repo: rovaniemi/remember-me-back
