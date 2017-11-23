@@ -51,7 +51,7 @@ public class BookControllerTest {
     @Test
     public void testSaveBook() {
         Book book = new Book();
-        book.setName("Lord of the rings");
+        book.setTitle("Lord of the rings");
         book.setAuthor("John Ronald Reuel Tolkien");
         bookRepository.saveAndFlush(book);
         Assert.assertEquals(book, bookRepository.findBookByName("Lord of the rings"));

@@ -45,7 +45,7 @@ dependencies {
     
     compile("org.springframework.boot:spring-boot-devtools")
 	
-	compile group: 'org.jsoup', name: 'jsoup', version: '1.10.2'
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.10.2'
     
     compile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: seleniumVersion
     compile group: 'org.seleniumhq.selenium', name: 'selenium-api', version: seleniumVersion
@@ -73,9 +73,9 @@ jacocoTestReport {
     }
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it,
+                fileTree(dir: it,
                     exclude: ['main/**'])
-        })
+            })
     }
 }
 

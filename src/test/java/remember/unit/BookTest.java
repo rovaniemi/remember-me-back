@@ -8,10 +8,10 @@ public class BookTest {
     @Test
     public void getterAndSetterTest(){
 
-        Book book = new Book(null);
-        Assert.assertEquals(null, book.getName());
+        Book book = new Book();
+        Assert.assertEquals(null, book.getTitle());
 
-        book.setName("course book");
-        Assert.assertEquals("course book", book.getName());
+        book.setTitle("course book");
+        Assert.assertEquals("course book", book.getTitle());
     }
 }

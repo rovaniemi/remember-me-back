@@ -30,7 +30,7 @@ public class BookController {
     @ResponseBody
     public Book addBook(@RequestBody Map<String, String> request) {
         Book book = new Book();
-        book.setName(request.get("name"));
+        book.setTitle(request.get("name"));
         book.setAuthor(request.get("author"));
         bookRepository.saveAndFlush(book);
         return book;

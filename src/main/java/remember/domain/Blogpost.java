@@ -2,12 +2,13 @@ package remember.domain;
 
 import javax.persistence.Entity;
 
-@Entity(name = "Book")
-public class Book extends Tip {
+@Entity(name = "Blogpost")
+public class Blogpost extends Tip {
 
     private String author;
+    private String url;
 
-    public Book() {
+    public Blogpost() {
     }
 
     public String getAuthor() {
@@ -16,6 +17,14 @@ public class Book extends Tip {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
 }

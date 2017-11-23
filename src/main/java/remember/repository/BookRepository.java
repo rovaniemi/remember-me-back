@@ -1,8 +1,9 @@
 package remember.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import javax.transaction.Transactional;
 import remember.domain.Book;
 
-public interface BookRepository extends JpaRepository<Book, Long> {
+@Transactional
+public interface BookRepository extends TipBaseRepository<Book> {
     Book findBookByName(String name);
 }
