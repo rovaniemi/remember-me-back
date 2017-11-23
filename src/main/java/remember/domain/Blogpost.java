@@ -2,7 +2,7 @@ package remember.domain;
 
 import javax.persistence.Entity;
 
-@Entity(name = "Blogpost")
+@Entity
 public class Blogpost extends Tip {
 
     private String author;

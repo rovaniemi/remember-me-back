@@ -2,7 +2,7 @@ package remember.domain;
 
 import javax.persistence.Entity;
 
-@Entity(name = "Video")
+@Entity
 public class Video extends Tip {
 
     private String url;
