@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
@@ -12,7 +14,10 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import java.lang.reflect.Method;
 
 @Configuration
-public class WebConfig {
+@EnableWebMvc
+public class WebConfig extends WebMvcConfigurerAdapter {
+
+    private final static String API_BASE_PATH = "api/v01";
 
     @Bean
     public WebMvcRegistrationsAdapter webMvcRegistrationsHandlerMapping() {
@@ -20,7 +25,6 @@ public class WebConfig {
             @Override
             public RequestMappingHandlerMapping getRequestMappingHandlerMapping() {
                 return new RequestMappingHandlerMapping() {
-                    private final static String API_BASE_PATH = "api/v01";
 
                     @Override
                     protected void registerHandlerMethod(Object handler, Method method, RequestMappingInfo mapping) {

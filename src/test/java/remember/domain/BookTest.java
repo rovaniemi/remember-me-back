@@ -1,4 +1,4 @@
-package remember.unit;
+package remember.domain;
 
 import org.junit.*;
 import remember.domain.inertances.Book;
