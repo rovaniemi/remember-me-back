@@ -1,7 +1,7 @@
 package remember.unit;
 
 import org.junit.*;
-import remember.domain.Book;
+import remember.domain.inertances.Book;
 
 public class BookTest {
 

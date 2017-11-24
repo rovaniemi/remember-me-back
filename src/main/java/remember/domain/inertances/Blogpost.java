@@ -1,4 +1,6 @@
-package remember.domain;
+package remember.domain.inertances;
+
+import remember.domain.Tip;
 
 import javax.persistence.Entity;
 
