@@ -3,7 +3,7 @@
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import remember.domain.inertances.Book;
-import remember.repository.BookRepository;
+import remember.repository.inertances.BookRepository;
 
 import java.util.List;
 import java.util.Map;
