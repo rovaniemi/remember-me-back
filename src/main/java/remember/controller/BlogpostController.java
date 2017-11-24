@@ -28,7 +28,7 @@ public class BlogpostController {
 
     @PostMapping("/blogpost")
     @ResponseBody
-    public Blogpost addVideo(@RequestBody Map<String, String> request) {
+    public Blogpost addBlogpost(@RequestBody Map<String, String> request) {
         Blogpost blogpost = new Blogpost();
         blogpost.setTitle(request.get("name"));
         blogpost.setUrl(request.get("url"));
@@ -39,7 +39,7 @@ public class BlogpostController {
 
     @DeleteMapping("/blogpost/{id}")
     @ResponseBody
-    public void deleteBook(@PathVariable Long id) {
+    public void deleteBlogpost(@PathVariable Long id) {
         blogpostRepository.delete(id);
     }
 }

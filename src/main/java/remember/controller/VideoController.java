@@ -38,7 +38,7 @@ public class VideoController {
 
     @DeleteMapping("/video/{id}")
     @ResponseBody
-    public void deleteBook(@PathVariable Long id) {
+    public void deleteVideo(@PathVariable Long id) {
         videoRepository.delete(id);
     }
 }
