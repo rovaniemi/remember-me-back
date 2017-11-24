@@ -14,19 +14,19 @@ public class BlogpostController {
     @Autowired
     private BlogpostRepository blogpostRepository;
 
-    @GetMapping("/blogpost")
+    @GetMapping("/blogposts")
     @ResponseBody
     public List<Blogpost> getAll() {
         return blogpostRepository.findAll();
     }
 
-    @GetMapping("/blogpost/{id}")
+    @GetMapping("/blogposts/{id}")
     @ResponseBody
     public Blogpost getBlogpost(@PathVariable Long id) {
         return blogpostRepository.findOne(id);
     }
 
-    @PostMapping("/blogpost")
+    @PostMapping("/blogposts")
     @ResponseBody
     public Blogpost addBlogpost(@RequestBody Map<String, String> request) {
         Blogpost blogpost = new Blogpost();
@@ -37,7 +37,7 @@ public class BlogpostController {
         return blogpost;
     }
 
-    @DeleteMapping("/blogpost/{id}")
+    @DeleteMapping("/blogposts/{id}")
     @ResponseBody
     public void deleteBlogpost(@PathVariable Long id) {
         blogpostRepository.delete(id);

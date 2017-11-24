@@ -12,19 +12,19 @@ public class TipController {
     @Autowired
     private TipRepository tipRepository;
 
-    @GetMapping("/tip")
+    @GetMapping("/tips")
     @ResponseBody
     public List<Tip> getAll() {
         return tipRepository.findAll();
     }
 
-    @GetMapping("/tip/{id}")
+    @GetMapping("/tips/{id}")
     @ResponseBody
     public Tip getTip(@PathVariable Long id) {
         return tipRepository.findOne(id);
     }
 
-    @DeleteMapping("/tip/{id}")
+    @DeleteMapping("/tips/{id}")
     @ResponseBody
     public void deleteTip(@PathVariable Long id) {
         tipRepository.delete(id);
