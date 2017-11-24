@@ -9,9 +9,6 @@ public class Book extends Tip {
 
     private String author;
 
-    public Book() {
-    }
-
     public String getAuthor() {
         return author;
     }

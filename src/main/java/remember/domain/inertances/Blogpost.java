@@ -10,9 +10,6 @@ public class Blogpost extends Tip {
     private String author;
     private String url;
 
-    public Blogpost() {
-    }
-
     public String getAuthor() {
         return author;
     }

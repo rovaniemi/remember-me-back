@@ -9,9 +9,6 @@ public class Video extends Tip {
 
     private String url;
 
-    public Video() {
-    }
-
     public String getUrl() {
         return url;
     }
