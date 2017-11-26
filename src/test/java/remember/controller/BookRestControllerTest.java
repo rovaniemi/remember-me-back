@@ -79,7 +79,7 @@ public class BookRestControllerTest {
 
     @Test
     public void bookNotFound() throws Exception {
-        mockMvc.perform(get("/books/1000")
+        this.mockMvc.perform(get("/api/v01/books/1000")
                 .content(this.json(new Book()))
                 .contentType(contentType))
                 .andExpect(status().isNotFound());
@@ -87,8 +87,7 @@ public class BookRestControllerTest {
 
     @Test
     public void readSingleBook() throws Exception {
-
-        mockMvc.perform(get("/books/"
+        this.mockMvc.perform(get("/api/v01/books/"
                 + this.bookList.get(0).getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
@@ -100,7 +99,7 @@ public class BookRestControllerTest {
 
     @Test
     public void readBooks() throws Exception {
-        mockMvc.perform(get("/books").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+        this.mockMvc.perform(get("/api/v01/books").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$", hasSize(3)))
@@ -121,11 +120,25 @@ public class BookRestControllerTest {
     @Test
     public void createBooks() throws Exception {
         String bookmarkJson = json(new Book("sample", "sample", "sample"));
-
-        this.mockMvc.perform(post("/books")
+        this.mockMvc.perform(post("/api/v01/books")
                 .contentType(contentType)
                 .content(bookmarkJson))
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void deleteBook() throws Exception {
+        this.mockMvc.perform(get("/api/v01/books").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(3)));
+        this.mockMvc.perform(delete("/api/v01/books/" + this.book.getId()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType));
+        this.mockMvc.perform(get("/api/v01/books").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(2)));
     }
 
     protected String json(Object o) throws IOException {

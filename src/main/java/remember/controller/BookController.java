@@ -42,7 +42,9 @@ public class BookController {
 
     @DeleteMapping("/books/{id}")
     @ResponseBody
-    public void deleteBook(@PathVariable Long id) {
+    public Book deleteBook(@PathVariable Long id) {
+        Book book = bookRepository.findOne(id);
         bookRepository.delete(id);
+        return book;
     }
 }
