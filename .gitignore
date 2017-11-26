@@ -14,6 +14,11 @@ out
 
 # mac
 
+# netbeans
+.settings
+lib/*
+.classpath
+.project
 
 # idea
 
@@ -43,3 +48,4 @@ remember-me-back.iml
 # mac
 DS_Store
 /.nb-gradle/
+.DS_Store
