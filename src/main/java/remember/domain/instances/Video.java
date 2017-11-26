@@ -9,6 +9,16 @@ public class Video extends Tip {
 
     private String url;
 
+    public Video(String url, String title, String comment) {
+        this.url = url;
+        this.setTitle(title);
+        this.setComment(comment);
+    }
+
+    public Video() {
+
+    }
+
     public String getUrl() {
         return url;
     }

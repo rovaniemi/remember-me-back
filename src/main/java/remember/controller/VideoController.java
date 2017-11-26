@@ -29,9 +29,7 @@ public class VideoController {
     @PostMapping("/videos")
     @ResponseBody
     public Video addVideo(@RequestBody Map<String, String> request) {
-        Video video = new Video();
-        video.setTitle(request.get("name"));
-        video.setUrl(request.get("url"));
+        Video video = new Video(request.get("url"), request.get("title"), request.get("comment"));
         videoRepository.saveAndFlush(video);
         return video;
     }

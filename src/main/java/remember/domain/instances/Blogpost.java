@@ -10,6 +10,16 @@ public class Blogpost extends Tip {
     private String author;
     private String url;
 
+    public Blogpost(String author, String url, String title, String comment) {
+        this.author = author;
+        this.url = url;
+        this.setTitle(title);
+        this.setComment(comment);
+    }
+
+    public Blogpost() {
+    }
+
     public String getAuthor() {
         return author;
     }

@@ -29,10 +29,7 @@ public class BlogpostController {
     @PostMapping("/blogposts")
     @ResponseBody
     public Blogpost addBlogpost(@RequestBody Map<String, String> request) {
-        Blogpost blogpost = new Blogpost();
-        blogpost.setTitle(request.get("name"));
-        blogpost.setUrl(request.get("url"));
-        blogpost.setAuthor(request.get("author"));
+        Blogpost blogpost = new Blogpost(request.get("author"), request.get("url"), request.get("title"), request.get("comment"));
         blogpostRepository.saveAndFlush(blogpost);
         return blogpost;
     }
