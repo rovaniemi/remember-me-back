@@ -13,6 +13,7 @@ public class Video extends Tip {
         this.url = url;
         this.setTitle(title);
         this.setComment(comment);
+        this.setType("video");
     }
 
     public Video() {

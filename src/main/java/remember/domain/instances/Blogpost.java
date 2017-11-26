@@ -15,6 +15,7 @@ public class Blogpost extends Tip {
         this.url = url;
         this.setTitle(title);
         this.setComment(comment);
+        this.setType("blogpost");
     }
 
     public Blogpost() {

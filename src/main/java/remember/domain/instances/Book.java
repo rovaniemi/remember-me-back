@@ -15,6 +15,7 @@ public class Book extends Tip {
         this.author = author;
         this.setTitle(title);
         this.setComment(comment);
+        this.setType("book");
     }
 
     public Book() {

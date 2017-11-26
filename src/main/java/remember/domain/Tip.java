@@ -11,6 +11,7 @@ public abstract class Tip extends AbstractPersistable<Long> {
 
     private String title;
     private String comment;
+    private String type;
 
     public String getTitle() {
         return title;
@@ -28,4 +29,11 @@ public abstract class Tip extends AbstractPersistable<Long> {
         this.comment = comment;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

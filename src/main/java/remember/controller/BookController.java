@@ -32,9 +32,7 @@ public class BookController {
     @PostMapping("/books")
     @ResponseBody
     public Book addBook(@RequestBody Map<String, String> request, HttpServletResponse response) {
-        Book book = new Book();
-        book.setTitle(request.get("name"));
-        book.setAuthor(request.get("author"));
+        Book book = new Book(request.get("title"), request.get("author"), request.get("comment"));
         bookRepository.saveAndFlush(book);
         response.setStatus(HttpStatus.SC_CREATED);
         return book;
