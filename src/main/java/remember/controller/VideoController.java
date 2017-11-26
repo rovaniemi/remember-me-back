@@ -2,7 +2,7 @@ package remember.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import remember.domain.inertances.Video;
+import remember.domain.instances.Video;
 import remember.repository.inertances.VideoRepository;
 
 import java.util.List;

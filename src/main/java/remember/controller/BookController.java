@@ -3,7 +3,7 @@ package remember.controller;
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import remember.domain.inertances.Book;
+import remember.domain.instances.Book;
 import remember.repository.inertances.BookRepository;
 
 import javax.servlet.http.HttpServletResponse;

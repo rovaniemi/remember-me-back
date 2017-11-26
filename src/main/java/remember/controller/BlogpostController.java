@@ -2,7 +2,7 @@ package remember.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import remember.domain.inertances.Blogpost;
+import remember.domain.instances.Blogpost;
 import remember.repository.inertances.BlogpostRepository;
 
 import java.util.List;

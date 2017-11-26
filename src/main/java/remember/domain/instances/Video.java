@@ -1,4 +1,4 @@
-package remember.domain.inertances;
+package remember.domain.instances;
 
 import remember.domain.Tip;
 
