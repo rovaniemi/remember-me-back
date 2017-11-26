@@ -91,7 +91,7 @@ public class TipRestController {
 
     @Test
     public void showSingleTip() throws Exception {
-        this.mockMvc.perform(get("/api/v01/books/"
+        this.mockMvc.perform(get("/api/v01/tips/"
                 + this.tips.get(0).getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
