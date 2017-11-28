@@ -119,7 +119,7 @@ public class VideoRestController {
 
     @Test
     public void createVideo() throws Exception {
-        String bookmarkJson = json(new Video("sample", "sample", "sample"));
+        String bookmarkJson = json(new Video("http://www.everywhereist.com/the-monkeys-of-gibraltar/", "sample", "sample"));
         this.mockMvc.perform(post("/api/v01/videos")
                 .contentType(contentType)
                 .content(bookmarkJson))

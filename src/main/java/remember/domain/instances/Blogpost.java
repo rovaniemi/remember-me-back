@@ -1,13 +1,24 @@
 package remember.domain.instances;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.URL;
 import remember.domain.Tip;
 
 import javax.persistence.Entity;
 
 @Entity
+@NoArgsConstructor
+@Data
 public class Blogpost extends Tip {
 
+    @NotBlank
+    @Length(max = 100)
     private String author;
+
+    @URL
     private String url;
 
     public Blogpost(String author, String url, String title, String comment) {
@@ -17,24 +28,4 @@ public class Blogpost extends Tip {
         this.setComment(comment);
         this.setType("blogpost");
     }
-
-    public Blogpost() {
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
 }

@@ -129,7 +129,7 @@ public class BlogpostRestControllerTest {
 
     @Test
     public void createBlogpost() throws Exception {
-        String bookmarkJson = json(new Blogpost("sample", "sample", "sample", "sample"));
+        String bookmarkJson = json(new Blogpost("sample", "http://www.everywhereist.com/the-monkeys-of-gibraltar/", "sample", "sample"));
         this.mockMvc.perform(post("/api/v01/blogposts")
                 .contentType(contentType)
                 .content(bookmarkJson))
