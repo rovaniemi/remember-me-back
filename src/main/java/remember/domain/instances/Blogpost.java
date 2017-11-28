@@ -13,11 +13,11 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 @Data
 public class Blogpost extends Tip {
-
-    @NotBlank
+    
     @Length(max = 100)
     private String author;
 
+    @NotBlank
     @URL
     private String url;
 
