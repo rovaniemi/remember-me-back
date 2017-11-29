@@ -2,6 +2,7 @@ package remember.controller;
 
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import remember.domain.instances.Blogpost;
 import remember.repository.inertances.BlogpostRepository;
@@ -33,8 +34,8 @@ public class BlogpostController {
 
     @PostMapping("/blogposts")
     @ResponseBody
-    public Blogpost addBlogpost(@RequestBody Map<String, String> request, HttpServletResponse response) {
-        Blogpost blogpost = new Blogpost(request.get("author"), request.get("url"), request.get("title"), request.get("comment"));
+    public Blogpost addBlogpost(@Validated Blogpost blogpost, HttpServletResponse response) {
+        blogpost.setType("blogpost");
         blogpostRepository.saveAndFlush(blogpost);
         response.setStatus(HttpStatus.SC_CREATED);
         return blogpost;

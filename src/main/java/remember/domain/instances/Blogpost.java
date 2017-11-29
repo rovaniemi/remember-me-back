@@ -13,12 +13,13 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 @Data
 public class Blogpost extends Tip {
-    
-    @Length(max = 100)
+
+    @NotBlank(message = "error.author.blank")
+    @Length(max = 100, message = "error.author.length")
     private String author;
 
-    @NotBlank
-    @URL
+    @NotBlank(message = "error.url.blank")
+    @URL(message = "error.url.invalid")
     private String url;
 
     public Blogpost(String author, String url, String title, String comment) {

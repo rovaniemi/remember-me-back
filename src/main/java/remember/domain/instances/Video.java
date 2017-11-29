@@ -14,8 +14,8 @@ import javax.persistence.Entity;
 public class Video extends Tip {
 
 
-    @NotBlank
-    @URL
+    @NotBlank(message = "error.url.blank")
+    @URL(message = "error.url.invalid")
     private String url;
 
     public Video(String url, String title, String comment) {

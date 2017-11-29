@@ -12,14 +12,8 @@ import javax.persistence.Entity;
 @Data
 public class Book extends Tip {
 
-    @NotBlank
-    @Length(max = 100)
+    @NotBlank(message = "error.author.blank")
+    @Length(max = 100, message = "error.author.length")
     private String author;
 
-    public Book(String author, String title, String comment) {
-        this.author = author;
-        this.setTitle(title);
-        this.setComment(comment);
-        this.setType("book");
-    }
 }

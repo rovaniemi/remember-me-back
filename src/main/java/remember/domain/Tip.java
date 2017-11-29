@@ -17,13 +17,12 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Data
 public abstract class Tip extends AbstractPersistable<Long> {
 
-    @NotBlank
-    @Length(max = 100)
+    @NotBlank(message = "error.title.blank")
+    @Length(max = 100, message = "error.title.length")
     private String title;
 
+    @Length(max = 1000, message = "error.comment.length")
     private String comment;
 
-    @NotBlank
-    @Length(max = 20)
     private String type;
 }
