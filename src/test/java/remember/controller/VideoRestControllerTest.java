@@ -33,7 +33,7 @@ import remember.repository.inertances.VideoRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Main.class)
 @WebAppConfiguration
-public class VideoRestController {
+public class VideoRestControllerTest {
 
     private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
@@ -70,11 +70,11 @@ public class VideoRestController {
         this.videoRepository.deleteAllInBatch();
 
         this.videos.add(videoRepository.save(
-                new Video("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "Rick Astley", "awesome video")));
+                new Video("Rick Astley", "awesome video","https://www.youtube.com/watch?v=dQw4w9WgXcQ")));
         this.videos.add(videoRepository.save(
-                new Video("https://www.youtube.com/watch?v=bWPMSSsVdPk", "Learn HTML", "no comment")));
+                new Video("Learn HTML", "no comment","https://www.youtube.com/watch?v=bWPMSSsVdPk")));
         this.videos.add(videoRepository.save(
-                new Video("https://www.youtube.com/watch?v=ZbZSe6N_BXs", "Happy", "makes me very happy")));
+                new Video("Happy", "makes me very happy","https://www.youtube.com/watch?v=ZbZSe6N_BXs")));
     }
 
     @Test
@@ -119,7 +119,7 @@ public class VideoRestController {
 
     @Test
     public void createVideo() throws Exception {
-        String bookmarkJson = json(new Video("http://www.everywhereist.com/the-monkeys-of-gibraltar/", "sample", "sample"));
+        String bookmarkJson = json(new Video("sample", "sample","http://www.everywhereist.com/the-monkeys-of-gibraltar/"));
         this.mockMvc.perform(post("/api/v01/videos")
                 .contentType(contentType)
                 .content(bookmarkJson))
@@ -139,6 +139,25 @@ public class VideoRestController {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$", hasSize(2)));
+    }
+
+    @Test
+    public void modifyVideo() throws Exception {
+        String bookmarkJson = json(new Video("test", "test", "https://www.google.fi"));
+        this.mockMvc.perform(get("/api/v01/videos").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(3)));
+        this.mockMvc.perform(put("/api/v01/videos/" + this.videos.get(0).getId())
+                .contentType(contentType)
+                .content(bookmarkJson))
+                .andExpect(status().isOk());
+        this.mockMvc.perform(get("/api/v01/videos").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$[0].id", is(this.videos.get(0).getId().intValue())))
+                .andExpect(jsonPath("$[0].title", is("test")));
     }
 
     protected String json(Object o) throws IOException {

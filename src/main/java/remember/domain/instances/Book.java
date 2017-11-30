@@ -1,25 +1,31 @@
 package remember.domain.instances;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
+import remember.domain.InstanceType;
 import remember.domain.Tip;
 import javax.persistence.Entity;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class Book extends Tip {
 
-    @NotBlank
-    @Length(max = 100)
+    @NotBlank(message = "error.author.blank")
+    @Length(max = 100, message = "error.author.length")
     private String author;
 
-    public Book(String author, String title, String comment) {
-        this.author = author;
+    @Length(max = 1000)
+    private String description;
+
+    public Book(String title, String comment, String author) {
         this.setTitle(title);
         this.setComment(comment);
-        this.setType("book");
+        this.setAuthor(author);
+        this.setType(InstanceType.BOOK);
     }
 }

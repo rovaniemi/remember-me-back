@@ -2,7 +2,10 @@ package remember.controller;
 
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import remember.domain.InstanceType;
+import remember.domain.instances.Book;
 import remember.domain.instances.Video;
 import remember.repository.inertances.VideoRepository;
 
@@ -31,8 +34,8 @@ public class VideoController {
 
     @PostMapping("/videos")
     @ResponseBody
-    public Video addVideo(@RequestBody Map<String, String> request, HttpServletResponse response) {
-        Video video = new Video(request.get("url"), request.get("title"), request.get("comment"));
+    public Video addVideo(@Validated @RequestBody Video video, HttpServletResponse response) {
+        video.setType(InstanceType.VIDEO);
         videoRepository.saveAndFlush(video);
         response.setStatus(HttpStatus.SC_CREATED);
         return video;
@@ -44,5 +47,17 @@ public class VideoController {
         Video video = videoRepository.findOne(id);
         videoRepository.delete(id);
         return video;
+    }
+
+    @PutMapping("/videos/{id}")
+    @ResponseBody
+    public Video modifyVideo(@Validated @RequestBody Video video, @PathVariable Long id, HttpServletResponse response) {
+        Video original = videoRepository.findOne(id);
+        original.setTitle(video.getTitle());
+        original.setComment(video.getComment());
+        original.setUrl(video.getUrl());
+        videoRepository.flush();
+        response.setStatus(HttpStatus.SC_OK);
+        return original;
     }
 }

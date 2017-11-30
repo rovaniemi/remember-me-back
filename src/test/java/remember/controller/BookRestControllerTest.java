@@ -69,12 +69,11 @@ public class BookRestControllerTest {
     public void setup() throws Exception {
         MockitoAnnotations.initMocks(this);
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).dispatchOptions(true).build();
-
         this.bookRepository.deleteAllInBatch();
 
-        this.book = bookRepository.save(new Book("Tom", "Tom's adventure", "fine book"));
-        this.bookList.add(bookRepository.save(new Book("J. K. Rowling", "Harry Potter and the Cursed Child", "A description")));
-        this.bookList.add(bookRepository.save(new Book("J. R. R. Tolkien", "The Lord of the Rings", "The Lord of the Rings is an epic high fantasy novel written by English author and scholar J. R. R. Tolkien.")));
+        this.book = bookRepository.save(new Book("Tom's adventure", "fine book", "Tom"));
+        this.bookList.add(bookRepository.save(new Book( "Harry Potter and the Cursed Child", "A description", "J. K. Rowling")));
+        this.bookList.add(bookRepository.save(new Book( "The Lord of the Rings", "The Lord of the Rings is an epic high fantasy novel written by English author and scholar J. R. R. Tolkien.", "J. R. R. Tolkien")));
     }
 
     @Test
@@ -95,6 +94,25 @@ public class BookRestControllerTest {
                 .andExpect(jsonPath("$.author", is("J. K. Rowling")))
                 .andExpect(jsonPath("$.title", is("Harry Potter and the Cursed Child")))
                 .andExpect(jsonPath("$.comment", is("A description")));
+    }
+
+    @Test
+    public void modifyBook() throws Exception {
+        String bookmarkJson = json(new Book("test", "test", "test"));
+        this.mockMvc.perform(get("/api/v01/books").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(3)));
+        this.mockMvc.perform(put("/api/v01/books/" + this.book.getId())
+                .contentType(contentType)
+                .content(bookmarkJson))
+                .andExpect(status().isOk());
+        this.mockMvc.perform(get("/api/v01/books").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$[0].id", is(this.book.getId().intValue())))
+                .andExpect(jsonPath("$[0].author", is("test")));
     }
 
     @Test

@@ -37,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Main.class)
 @WebAppConfiguration
-public class TipRestController {
+public class TipRestControllerTest {
 
     private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
@@ -74,11 +74,10 @@ public class TipRestController {
 
         this.tipRepository.deleteAllInBatch();
 
-        this.tips.add(tipRepository.save(new Book("Tom", "Tom's adventure", "fine book")));
-        this.tips.add(tipRepository.save(new Blogpost("Dana Shultz",
-                "https://minimalistbaker.com/creamy-avocado-banana-green-smoothie/",
-                "Minimalist Baker", "great recipe")));
-        this.tips.add(tipRepository.save(new Video("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "Rick Astley", "awesome video")));
+        this.tips.add(tipRepository.save(new Book("Tom's adventure", "fine book", "Tom")));
+        this.tips.add(tipRepository.save(new Blogpost("Minimalist Baker","great recipe","Dana Shultz",
+                "https://minimalistbaker.com/creamy-avocado-banana-green-smoothie/")));
+        this.tips.add(tipRepository.save(new Video("Rick Astley", "awesome video","https://www.youtube.com/watch?v=dQw4w9WgXcQ")));
     }
 
     @Test

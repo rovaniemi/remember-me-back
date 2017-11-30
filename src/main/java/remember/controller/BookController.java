@@ -2,7 +2,9 @@ package remember.controller;
 
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import remember.domain.InstanceType;
 import remember.domain.instances.Book;
 import remember.repository.inertances.BookRepository;
 
@@ -31,8 +33,8 @@ public class BookController {
 
     @PostMapping("/books")
     @ResponseBody
-    public Book addBook(@RequestBody Map<String, String> request, HttpServletResponse response) {
-        Book book = new Book(request.get("title"), request.get("author"), request.get("comment"));
+    public Book addBook(@Validated @RequestBody Book book, HttpServletResponse response) {
+        book.setType(InstanceType.BOOK);
         bookRepository.saveAndFlush(book);
         response.setStatus(HttpStatus.SC_CREATED);
         return book;
@@ -44,5 +46,18 @@ public class BookController {
         Book book = bookRepository.findOne(id);
         bookRepository.delete(id);
         return book;
+    }
+
+    @PutMapping("/books/{id}")
+    @ResponseBody
+    public Book modifyBook(@Validated @RequestBody Book book, @PathVariable Long id, HttpServletResponse response) {
+        Book original = bookRepository.findOne(id);
+        original.setTitle(book.getTitle());
+        original.setAuthor(book.getAuthor());
+        original.setComment(book.getComment());
+        original.setDescription(book.getDescription());
+        bookRepository.flush();
+        response.setStatus(HttpStatus.SC_OK);
+        return original;
     }
 }
