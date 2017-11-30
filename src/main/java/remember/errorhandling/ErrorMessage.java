@@ -11,5 +11,6 @@ public class ErrorMessage {
 
     private ErrorMessageType type;
     private String message;
+    private String field;
 
 }

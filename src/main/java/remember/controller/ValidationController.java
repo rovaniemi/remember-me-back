@@ -39,7 +39,7 @@ public class ValidationController {
             for (int i = 0; i < error.size(); i++) {
                 Locale currentLocale = LocaleContextHolder.getLocale();
                 String msg = msgSource.getMessage(error.get(i).getDefaultMessage(), null, currentLocale);
-                messages.add(new ErrorMessage(ErrorMessageType.ERROR, msg));
+                messages.add(new ErrorMessage(ErrorMessageType.ERROR, msg, error.get(i).getField()));
             }
         }
         return messages;
