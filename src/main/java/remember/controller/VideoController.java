@@ -4,6 +4,7 @@ import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import remember.domain.InstanceType;
 import remember.domain.instances.Book;
 import remember.domain.instances.Video;
 import remember.repository.inertances.VideoRepository;
@@ -34,7 +35,7 @@ public class VideoController {
     @PostMapping("/videos")
     @ResponseBody
     public Video addVideo(@Validated @RequestBody Video video, HttpServletResponse response) {
-        video.setType("video");
+        video.setType(InstanceType.VIDEO);
         videoRepository.saveAndFlush(video);
         response.setStatus(HttpStatus.SC_CREATED);
         return video;

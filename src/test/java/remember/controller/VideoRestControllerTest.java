@@ -16,11 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import remember.Main;
-import remember.domain.instances.Book;
-import remember.domain.instances.Video;
-import remember.domain.instances.Blogpost;
-import remember.domain.Tip;
-import remember.repository.TipRepository;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -32,12 +27,13 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import remember.domain.instances.Video;
+import remember.repository.inertances.VideoRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Main.class)
 @WebAppConfiguration
-public class TipRestController {
+public class VideoRestControllerTest {
 
     private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
@@ -47,17 +43,16 @@ public class TipRestController {
 
     private HttpMessageConverter mappingJackson2HttpMessageConverter;
 
-    private List<Tip> tips = new ArrayList<>();
+    private List<Video> videos = new ArrayList<>();
 
     @Autowired
-    private TipRepository tipRepository;
+    private VideoRepository videoRepository;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
 
     @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
-
         this.mappingJackson2HttpMessageConverter = Arrays.asList(converters).stream()
                 .filter(hmc -> hmc instanceof MappingJackson2HttpMessageConverter)
                 .findAny()
@@ -72,66 +67,75 @@ public class TipRestController {
         MockitoAnnotations.initMocks(this);
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).dispatchOptions(true).build();
 
-        this.tipRepository.deleteAllInBatch();
+        this.videoRepository.deleteAllInBatch();
 
-        this.tips.add(tipRepository.save(new Book("Tom", "Tom's adventure", "fine book")));
-        this.tips.add(tipRepository.save(new Blogpost("Dana Shultz",
-                "https://minimalistbaker.com/creamy-avocado-banana-green-smoothie/",
-                "Minimalist Baker", "great recipe")));
-        this.tips.add(tipRepository.save(new Video("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "Rick Astley", "awesome video")));
+        this.videos.add(videoRepository.save(
+                new Video("Rick Astley", "awesome video","https://www.youtube.com/watch?v=dQw4w9WgXcQ")));
+        this.videos.add(videoRepository.save(
+                new Video("Learn HTML", "no comment","https://www.youtube.com/watch?v=bWPMSSsVdPk")));
+        this.videos.add(videoRepository.save(
+                new Video("Happy", "makes me very happy","https://www.youtube.com/watch?v=ZbZSe6N_BXs")));
     }
 
     @Test
-    public void tipNotFound() throws Exception {
-        this.mockMvc.perform(get("/api/v01/tips/1111")
-                .content(this.json(new Book()))
+    public void videoNotFound() throws Exception {
+        this.mockMvc.perform(get("/api/v01/videos/7777")
+                .content(this.json(new Video()))
                 .contentType(contentType))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    public void showSingleTip() throws Exception {
-        this.mockMvc.perform(get("/api/v01/tips/"
-                + this.tips.get(0).getId()))
+    public void showSingleVideo() throws Exception {
+        this.mockMvc.perform(get("/api/v01/videos/"
+                + this.videos.get(0).getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$.id", is(this.tips.get(0).getId().intValue())))
-                .andExpect(jsonPath("$.author", is("Tom")))
-                .andExpect(jsonPath("$.title", is("Tom's adventure")))
-                .andExpect(jsonPath("$.comment", is("fine book")));
+                .andExpect(jsonPath("$.id", is(this.videos.get(0).getId().intValue())))
+                .andExpect(jsonPath("$.url", is("https://www.youtube.com/watch?v=dQw4w9WgXcQ")))
+                .andExpect(jsonPath("$.title", is("Rick Astley")))
+                .andExpect(jsonPath("$.comment", is("awesome video")));
     }
 
     @Test
-    public void showTips() throws Exception {
-        this.mockMvc.perform(get("/api/v01/tips").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+    public void showAllVideos() throws Exception {
+        this.mockMvc.perform(get("/api/v01/videos").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$", hasSize(3)))
-                .andExpect(jsonPath("$[0].id", is(this.tips.get(0).getId().intValue())))
-                .andExpect(jsonPath("$[0].author", is("Tom")))
-                .andExpect(jsonPath("$[0].title", is("Tom's adventure")))
-                .andExpect(jsonPath("$[0].comment", is("fine book")))
-                .andExpect(jsonPath("$[1].id", is(this.tips.get(1).getId().intValue())))
-                .andExpect(jsonPath("$[1].author", is("Dana Shultz")))
-                .andExpect(jsonPath("$[1].title", is("Minimalist Baker")))
-                .andExpect(jsonPath("$[1].url", is("https://minimalistbaker.com/creamy-avocado-banana-green-smoothie/")))
-                .andExpect(jsonPath("$[1].comment", is("great recipe")))
-                .andExpect(jsonPath("$[2].id", is(this.tips.get(2).getId().intValue())))
-                .andExpect(jsonPath("$[2].url", is("https://www.youtube.com/watch?v=dQw4w9WgXcQ")))
-                .andExpect(jsonPath("$[2].title", is("Rick Astley")))
-                .andExpect(jsonPath("$[2].comment", is("awesome video")));
+                .andExpect(jsonPath("$[0].id", is(this.videos.get(0).getId().intValue())))
+                .andExpect(jsonPath("$[0].url", is("https://www.youtube.com/watch?v=dQw4w9WgXcQ")))
+                .andExpect(jsonPath("$[0].title", is("Rick Astley")))
+                .andExpect(jsonPath("$[0].comment", is("awesome video")))
+                .andExpect(jsonPath("$[1].id", is(this.videos.get(1).getId().intValue())))
+                .andExpect(jsonPath("$[1].url", is("https://www.youtube.com/watch?v=bWPMSSsVdPk")))
+                .andExpect(jsonPath("$[1].title", is("Learn HTML")))
+                .andExpect(jsonPath("$[1].comment", is("no comment")))
+                .andExpect(jsonPath("$[2].id", is(this.videos.get(2).getId().intValue())))
+                .andExpect(jsonPath("$[2].url", is("https://www.youtube.com/watch?v=ZbZSe6N_BXs")))
+                .andExpect(jsonPath("$[2].title", is("Happy")))
+                .andExpect(jsonPath("$[2].comment", is("makes me very happy")));
     }
 
     @Test
-    public void deleteTip() throws Exception {
-        this.mockMvc.perform(get("/api/v01/tips").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+    public void createVideo() throws Exception {
+        String bookmarkJson = json(new Video("sample", "sample","http://www.everywhereist.com/the-monkeys-of-gibraltar/"));
+        this.mockMvc.perform(post("/api/v01/videos")
+                .contentType(contentType)
+                .content(bookmarkJson))
+                .andExpect(status().isCreated());
+    }
+    
+    @Test
+    public void deleteVideo() throws Exception {
+        this.mockMvc.perform(get("/api/v01/videos").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$", hasSize(3)));
-        this.mockMvc.perform(delete("/api/v01/tips/" + this.tips.get(0).getId()))
+        this.mockMvc.perform(delete("/api/v01/videos/" + this.videos.get(0).getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType));
-        this.mockMvc.perform(get("/api/v01/tips").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+        this.mockMvc.perform(get("/api/v01/videos").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$", hasSize(2)));

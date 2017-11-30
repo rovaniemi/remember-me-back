@@ -4,6 +4,7 @@ import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import remember.domain.InstanceType;
 import remember.domain.instances.Blogpost;
 import remember.repository.inertances.BlogpostRepository;
 
@@ -34,8 +35,8 @@ public class BlogpostController {
 
     @PostMapping("/blogposts")
     @ResponseBody
-    public Blogpost addBlogpost(@Validated Blogpost blogpost, HttpServletResponse response) {
-        blogpost.setType("blogpost");
+    public Blogpost addBlogpost(@Validated @RequestBody Blogpost blogpost, HttpServletResponse response) {
+        blogpost.setType(InstanceType.BLOGPOST);
         blogpostRepository.saveAndFlush(blogpost);
         response.setStatus(HttpStatus.SC_CREATED);
         return blogpost;

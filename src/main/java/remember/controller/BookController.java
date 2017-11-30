@@ -4,6 +4,7 @@ import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import remember.domain.InstanceType;
 import remember.domain.instances.Book;
 import remember.repository.inertances.BookRepository;
 
@@ -33,7 +34,7 @@ public class BookController {
     @PostMapping("/books")
     @ResponseBody
     public Book addBook(@Validated @RequestBody Book book, HttpServletResponse response) {
-        book.setType("book");
+        book.setType(InstanceType.BOOK);
         bookRepository.saveAndFlush(book);
         response.setStatus(HttpStatus.SC_CREATED);
         return book;

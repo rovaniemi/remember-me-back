@@ -73,14 +73,14 @@ public class BlogpostRestControllerTest {
         this.blogpostRepository.deleteAllInBatch();
 
         this.blogpost = blogpostRepository.save(
-                new Blogpost("Dana Shultz", "https://minimalistbaker.com/creamy-avocado-banana-green-smoothie/",
-                        "Minimalist Baker", "great recipe"));
+                new Blogpost("Minimalist Baker", "great recipe",
+                        "Dana Shultz", "https://minimalistbaker.com/creamy-avocado-banana-green-smoothie/"));
         this.blogpostList.add(blogpostRepository.save(
-                new Blogpost("Linux Foundation", "https://www.linuxfoundation.org/blog/inspiring-next-generation-open-source/",
-                        "Inspiring the Next Generation of Open Source", "linux")));
+                new Blogpost("Inspiring the Next Generation of Open Source", "linux",
+                        "Linux Foundation", "https://www.linuxfoundation.org/blog/inspiring-next-generation-open-source/")));
         this.blogpostList.add(blogpostRepository.save(
-                new Blogpost("Geraldine DeRuiter", "http://www.everywhereist.com/the-monkeys-of-gibraltar/",
-                        "Monkeys of Gibraltar", "monkeys")));
+                new Blogpost("Monkeys of Gibraltar", "monkeys",
+                        "Geraldine DeRuiter", "http://www.everywhereist.com/the-monkeys-of-gibraltar/")));
     }
 
     @Test
@@ -129,7 +129,7 @@ public class BlogpostRestControllerTest {
 
     @Test
     public void createBlogpost() throws Exception {
-        String bookmarkJson = json(new Blogpost("sample", "http://www.everywhereist.com/the-monkeys-of-gibraltar/", "sample", "sample"));
+        String bookmarkJson = json(new Blogpost("sample", "sample", "sample", "http://www.everywhereist.com/the-monkeys-of-gibraltar/"));
         this.mockMvc.perform(post("/api/v01/blogposts")
                 .contentType(contentType)
                 .content(bookmarkJson))

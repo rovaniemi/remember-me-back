@@ -24,5 +24,5 @@ public abstract class Tip extends AbstractPersistable<Long> {
     @Length(max = 1000, message = "error.comment.length")
     private String comment;
 
-    private String type;
+    private InstanceType type;
 }
