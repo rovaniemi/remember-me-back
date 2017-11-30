@@ -19,6 +19,9 @@ public class Book extends Tip {
     @Length(max = 100, message = "error.author.length")
     private String author;
 
+    @Length(max = 1000)
+    private String description;
+
     public Book(String title, String comment, String author) {
         this.setTitle(title);
         this.setComment(comment);

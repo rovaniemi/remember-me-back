@@ -97,6 +97,25 @@ public class BookRestControllerTest {
     }
 
     @Test
+    public void modifyBook() throws Exception {
+        String bookmarkJson = json(new Book("test", "test", "test"));
+        this.mockMvc.perform(get("/api/v01/books").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(3)));
+        this.mockMvc.perform(put("/api/v01/books/" + this.book.getId())
+                .contentType(contentType)
+                .content(bookmarkJson))
+                .andExpect(status().isOk());
+        this.mockMvc.perform(get("/api/v01/books").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$[0].id", is(this.book.getId().intValue())))
+                .andExpect(jsonPath("$[0].author", is("test")));
+    }
+
+    @Test
     public void readBooks() throws Exception {
         this.mockMvc.perform(get("/api/v01/books").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
                 .andExpect(status().isOk())

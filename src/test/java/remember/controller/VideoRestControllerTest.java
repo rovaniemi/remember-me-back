@@ -141,6 +141,25 @@ public class VideoRestControllerTest {
                 .andExpect(jsonPath("$", hasSize(2)));
     }
 
+    @Test
+    public void modifyVideo() throws Exception {
+        String bookmarkJson = json(new Video("test", "test", "https://www.google.fi"));
+        this.mockMvc.perform(get("/api/v01/videos").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(3)));
+        this.mockMvc.perform(put("/api/v01/videos/" + this.videos.get(0).getId())
+                .contentType(contentType)
+                .content(bookmarkJson))
+                .andExpect(status().isOk());
+        this.mockMvc.perform(get("/api/v01/videos").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$[0].id", is(this.videos.get(0).getId().intValue())))
+                .andExpect(jsonPath("$[0].title", is("test")));
+    }
+
     protected String json(Object o) throws IOException {
         MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
         this.mappingJackson2HttpMessageConverter.write(

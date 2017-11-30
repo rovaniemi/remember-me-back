@@ -48,4 +48,16 @@ public class VideoController {
         videoRepository.delete(id);
         return video;
     }
+
+    @PutMapping("/videos/{id}")
+    @ResponseBody
+    public Video modifyVideo(@Validated @RequestBody Video video, @PathVariable Long id, HttpServletResponse response) {
+        Video original = videoRepository.findOne(id);
+        original.setTitle(video.getTitle());
+        original.setComment(video.getComment());
+        original.setUrl(video.getUrl());
+        videoRepository.flush();
+        response.setStatus(HttpStatus.SC_OK);
+        return original;
+    }
 }

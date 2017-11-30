@@ -49,4 +49,16 @@ public class BlogpostController {
         blogpostRepository.delete(id);
         return blogpost;
     }
+
+    @PutMapping("/blogposts/{id}")
+    @ResponseBody
+    public Blogpost modifyBlogpost(@Validated @RequestBody Blogpost blogpost,@PathVariable Long id, HttpServletResponse response) {
+        Blogpost original = blogpostRepository.findOne(id);
+        original.setTitle(blogpost.getTitle());
+        original.setAuthor(blogpost.getAuthor());
+        original.setUrl(blogpost.getUrl());
+        blogpostRepository.flush();
+        response.setStatus(HttpStatus.SC_OK);
+        return original;
+    }
 }

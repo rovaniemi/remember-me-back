@@ -47,4 +47,17 @@ public class BookController {
         bookRepository.delete(id);
         return book;
     }
+
+    @PutMapping("/books/{id}")
+    @ResponseBody
+    public Book modifyBook(@Validated @RequestBody Book book, @PathVariable Long id, HttpServletResponse response) {
+        Book original = bookRepository.findOne(id);
+        original.setTitle(book.getTitle());
+        original.setAuthor(book.getAuthor());
+        original.setComment(book.getComment());
+        original.setDescription(book.getDescription());
+        bookRepository.flush();
+        response.setStatus(HttpStatus.SC_OK);
+        return original;
+    }
 }

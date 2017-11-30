@@ -137,7 +137,7 @@ public class BlogpostRestControllerTest {
     }
 
     @Test
-    public void deleteBook() throws Exception {
+    public void deleteBlogpost() throws Exception {
         this.mockMvc.perform(get("/api/v01/blogposts").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
@@ -149,6 +149,25 @@ public class BlogpostRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$", hasSize(2)));
+    }
+
+    @Test
+    public void modifyBlogpost() throws Exception {
+        String bookmarkJson = json(new Blogpost("test", "test", "test", "http://www.everywhereist.com/the-monkeys-of-gibraltar/"));
+        this.mockMvc.perform(get("/api/v01/blogposts").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(3)));
+        this.mockMvc.perform(put("/api/v01/blogposts/" + this.blogpost.getId())
+                .contentType(contentType)
+                .content(bookmarkJson))
+                .andExpect(status().isOk());
+        this.mockMvc.perform(get("/api/v01/blogposts").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$[0].id", is(this.blogpost.getId().intValue())))
+                .andExpect(jsonPath("$[0].author", is("test")));
     }
 
     protected String json(Object o) throws IOException {
