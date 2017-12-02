@@ -99,6 +99,7 @@ public class BlogpostRestControllerTest {
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$.id", is(this.blogpost.getId().intValue())))
                 .andExpect(jsonPath("$.author", is("Dana Shultz")))
+                .andExpect(jsonPath("$.read", is(false)))
                 .andExpect(jsonPath("$.title", is("Minimalist Baker")))
                 .andExpect(jsonPath("$.url", is("https://minimalistbaker.com/creamy-avocado-banana-green-smoothie/")))
                 .andExpect(jsonPath("$.comment", is("great recipe")));

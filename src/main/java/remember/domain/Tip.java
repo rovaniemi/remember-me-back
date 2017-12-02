@@ -3,6 +3,8 @@ package remember.domain;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,4 +27,7 @@ public abstract class Tip extends AbstractPersistable<Long> {
     private String comment;
 
     private InstanceType type;
+
+    @NotNull
+    private boolean read;
 }
