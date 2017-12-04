@@ -56,6 +56,7 @@ public class VideoController {
         original.setTitle(video.getTitle());
         original.setComment(video.getComment());
         original.setUrl(video.getUrl());
+        original.setRead(video.isRead());
         videoRepository.flush();
         response.setStatus(HttpStatus.SC_OK);
         return original;

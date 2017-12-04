@@ -56,6 +56,7 @@ public class BookController {
         original.setAuthor(book.getAuthor());
         original.setComment(book.getComment());
         original.setDescription(book.getDescription());
+        original.setRead(book.isRead());
         bookRepository.flush();
         response.setStatus(HttpStatus.SC_OK);
         return original;
