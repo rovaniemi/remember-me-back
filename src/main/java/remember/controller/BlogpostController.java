@@ -58,6 +58,7 @@ public class BlogpostController {
         original.setAuthor(blogpost.getAuthor());
         original.setUrl(blogpost.getUrl());
         original.setRead(blogpost.isRead());
+        original.setComment(blogpost.getComment());
         blogpostRepository.flush();
         response.setStatus(HttpStatus.SC_OK);
         return original;
