@@ -1,5 +1,6 @@
 package remember.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 import remember.Main;
 import remember.domain.instances.Blogpost;
 import remember.domain.instances.Book;
+import remember.domain.instances.Video;
 import remember.repository.inertances.BookRepository;
 
 import java.io.IOException;
@@ -46,9 +48,6 @@ public class ValidationTest {
     private HttpMessageConverter mappingJackson2HttpMessageConverter;
 
     @Autowired
-    private BookRepository bookRepository;
-
-    @Autowired
     private WebApplicationContext webApplicationContext;
 
     @Autowired
@@ -70,25 +69,115 @@ public class ValidationTest {
     }
 
     @Test
-    public void invalidBookNameAndAuthor() throws Exception {
+    public void emptyTitle() throws Exception {
         Book book = new Book();
         book.setTitle("");
-        book.setAuthor("");
+        book.setAuthor("author");
         String bookJson = json(book);
         this.mockMvc.perform(post("/api/v01/books")
                 .contentType(contentType)
                 .content(bookJson))
                 .andExpect(status().is(400))
                 .andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].type", is("ERROR")))
                 .andExpect(jsonPath("$[0].message", is("The title is a required field")))
-                .andExpect(jsonPath("$[0].field", is("title")))
-                .andExpect(jsonPath("$[1].type", is("ERROR")))
-                .andExpect(jsonPath("$[1].message", is("The author is a required field")))
-                .andExpect(jsonPath("$[1].field", is("author")));
+                .andExpect(jsonPath("$[0].field", is("title")));
     }
 
+    @Test
+    public void emptyAuthor() throws Exception {
+        Blogpost blogpost = new Blogpost("title", "", "", "https://www.google.fi");
+        String blogpostJson = json(blogpost);
+        this.mockMvc.perform(post("/api/v01/blogposts")
+                .contentType(contentType)
+                .content(blogpostJson))
+                .andExpect(status().is(400))
+                .andExpect(content().contentType(contentType))
+                .andExpect((jsonPath("$", hasSize(1))))
+                .andExpect(jsonPath("$[0].type", is("ERROR")))
+                .andExpect(jsonPath("$[0].message", is("The author is a required field")))
+                .andExpect(jsonPath("$[0].field", is("author")));
+    }
+
+    @Test
+    public void emptyUrl() throws Exception {
+        Video video = new Video("title", "", "");
+        String videoJson = json(video);
+        this.mockMvc.perform(post("/api/v01/videos")
+                .contentType(contentType)
+                .content(videoJson))
+                .andExpect(status().is(400))
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].type", is("ERROR")))
+                .andExpect(jsonPath("$[0].message", is("The url is a required field")))
+                .andExpect(jsonPath("$[0].field", is("url")));
+    }
+
+    @Test
+    public void invalidUrl() throws Exception {
+        Video video = new Video("title", "", "url");
+        String videoJson = json(video);
+        this.mockMvc.perform(post("/api/v01/videos")
+                .contentType(contentType)
+                .content(videoJson))
+                .andExpect(status().is(400))
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].type", is("ERROR")))
+                .andExpect(jsonPath("$[0].message", is("The url should be valid")))
+                .andExpect(jsonPath("$[0].field", is("url")));
+    }
+
+    @Test
+    public void commentTooLong() throws Exception {
+        String comment = StringUtils.repeat("x", 1001);
+        Book book = new Book("title", comment, "author");
+        String bookJson = json(book);
+        this.mockMvc.perform(post("/api/v01/books")
+                .contentType(contentType)
+                .content(bookJson))
+                .andExpect(status().is(400))
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].type", is("ERROR")))
+                .andExpect(jsonPath("$[0].message", is("The comment must be under 1000 characters")))
+                .andExpect(jsonPath("$[0].field", is("comment")));
+
+    }
+
+    @Test
+    public void titleTooLong() throws Exception {
+        String title = StringUtils.repeat("x", 101);
+        Blogpost blogpost = new Blogpost(title, "", "author", "https://www.google.fi");
+        String blogpostJson = json(blogpost);
+        this.mockMvc.perform(post("/api/v01/blogposts")
+                .contentType(contentType)
+                .content(blogpostJson))
+                .andExpect(status().is(400))
+                .andExpect(content().contentType(contentType))
+                .andExpect((jsonPath("$", hasSize(1))))
+                .andExpect(jsonPath("$[0].type", is("ERROR")))
+                .andExpect(jsonPath("$[0].message", is("The title should be between 1 and 100 characters")))
+                .andExpect(jsonPath("$[0].field", is("title")));
+    }
+
+    @Test
+    public void authorTooLong() throws Exception {
+        String author = StringUtils.repeat("x", 101);
+        Blogpost blogpost = new Blogpost("title", "", author, "https://www.google.fi");
+        String blogpostJson = json(blogpost);
+        this.mockMvc.perform(post("/api/v01/blogposts")
+                .contentType(contentType)
+                .content(blogpostJson))
+                .andExpect(status().is(400))
+                .andExpect(content().contentType(contentType))
+                .andExpect((jsonPath("$", hasSize(1))))
+                .andExpect(jsonPath("$[0].type", is("ERROR")))
+                .andExpect(jsonPath("$[0].message", is("The author should be between 1 and 100 characters")))
+                .andExpect(jsonPath("$[0].field", is("author")));
+    }
 
     protected String json(Object o) throws IOException {
         MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
