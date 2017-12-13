@@ -7,10 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import remember.domain.InstanceType;
 import remember.domain.instances.Book;
 import remember.repository.inertances.BookRepository;
-
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class BookController {

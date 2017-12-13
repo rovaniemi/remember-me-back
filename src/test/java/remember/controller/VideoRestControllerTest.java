@@ -16,6 +16,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import remember.Main;
+import remember.domain.instances.Video;
+import remember.repository.inertances.VideoRepository;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -27,8 +29,6 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import remember.domain.instances.Video;
-import remember.repository.inertances.VideoRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Main.class)

@@ -20,7 +20,6 @@ import remember.Main;
 import remember.domain.instances.Blogpost;
 import remember.domain.instances.Book;
 import remember.domain.instances.Video;
-import remember.repository.inertances.BookRepository;
 
 import java.io.IOException;
 import java.nio.charset.Charset;

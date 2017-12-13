@@ -23,21 +23,20 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
             @Override
             public RequestMappingHandlerMapping getRequestMappingHandlerMapping() {
                 return new RequestMappingHandlerMapping() {
-
                     @Override
-                    protected void registerHandlerMethod(Object handler, Method method, RequestMappingInfo mapping) {
+                    protected void registerHandlerMethod(Object handler, Method method, RequestMappingInfo mappingInfo) {
                         Class<?> beanType = method.getDeclaringClass();
                         if (AnnotationUtils.findAnnotation(beanType, RestController.class) != null) {
                             PatternsRequestCondition apiPattern = new PatternsRequestCondition(API_BASE_PATH)
-                                    .combine(mapping.getPatternsCondition());
+                                    .combine(mappingInfo.getPatternsCondition());
 
-                            mapping = new RequestMappingInfo(mapping.getName(), apiPattern,
-                                    mapping.getMethodsCondition(), mapping.getParamsCondition(),
-                                    mapping.getHeadersCondition(), mapping.getConsumesCondition(),
-                                    mapping.getProducesCondition(), mapping.getCustomCondition());
+                            mappingInfo = new RequestMappingInfo(mappingInfo.getName(), apiPattern,
+                                    mappingInfo.getMethodsCondition(), mappingInfo.getParamsCondition(),
+                                    mappingInfo.getHeadersCondition(), mappingInfo.getConsumesCondition(),
+                                    mappingInfo.getProducesCondition(), mappingInfo.getCustomCondition());
                         }
 
-                        super.registerHandlerMethod(handler, method, mapping);
+                        super.registerHandlerMethod(handler, method, mappingInfo);
                     }
                 };
             }
