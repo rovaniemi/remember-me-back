@@ -10,7 +10,6 @@ import remember.repository.inertances.BlogpostRepository;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class BlogpostController {

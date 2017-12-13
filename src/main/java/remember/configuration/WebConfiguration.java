@@ -24,19 +24,19 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
             public RequestMappingHandlerMapping getRequestMappingHandlerMapping() {
                 return new RequestMappingHandlerMapping() {
                     @Override
-                    protected void registerHandlerMethod(Object handler, Method method, RequestMappingInfo mappingInfo) {
+                    protected void registerHandlerMethod(Object handler, Method method, RequestMappingInfo mapping) {
                         Class<?> beanType = method.getDeclaringClass();
                         if (AnnotationUtils.findAnnotation(beanType, RestController.class) != null) {
                             PatternsRequestCondition apiPattern = new PatternsRequestCondition(API_BASE_PATH)
-                                    .combine(mappingInfo.getPatternsCondition());
-
-                            mappingInfo = new RequestMappingInfo(mappingInfo.getName(), apiPattern,
-                                    mappingInfo.getMethodsCondition(), mappingInfo.getParamsCondition(),
-                                    mappingInfo.getHeadersCondition(), mappingInfo.getConsumesCondition(),
-                                    mappingInfo.getProducesCondition(), mappingInfo.getCustomCondition());
+                                    .combine(mapping.getPatternsCondition());
+                            
+                            mapping = new RequestMappingInfo(mapping.getName(), apiPattern,
+                                    mapping.getMethodsCondition(), mapping.getParamsCondition(),
+                                    mapping.getHeadersCondition(), mapping.getConsumesCondition(),
+                                    mapping.getProducesCondition(), mapping.getCustomCondition());
                         }
 
-                        super.registerHandlerMethod(handler, method, mappingInfo);
+                        super.registerHandlerMethod(handler, method, mapping);
                     }
                 };
             }
